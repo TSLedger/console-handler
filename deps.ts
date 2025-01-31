@@ -1,6 +1,6 @@
 // Ledger
-export { Level } from 'jsr:@ledger/ledger@0.1.1/struct';
-export type { BinderOption, DispatchMessageContext, WorkerHandler } from 'jsr:@ledger/ledger@0.1.1/struct';
+export { Level } from 'jsr:@ledger/ledger@0.1.2/struct';
+export type { BinderOption, DispatchMessageContext, WorkerHandler } from 'jsr:@ledger/ledger@0.1.2/struct';
 
 // JSR
 export { format } from 'jsr:@std/datetime@0.225.3/format';

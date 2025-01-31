@@ -2,18 +2,44 @@
   "version": "4",
   "specifiers": {
     "jsr:@ledger/ledger@0.1.1": "0.1.1",
+    "jsr:@std/datetime@0.225.3": "0.225.3",
     "jsr:@std/fmt@1.0.3": "1.0.3",
-    "jsr:@std/fmt@1.0.5": "1.0.5"
+    "jsr:@std/fmt@1.0.5": "1.0.5",
+    "npm:string.ify@1.0.64": "1.0.64"
   },
   "jsr": {
     "@ledger/ledger@0.1.1": {
       "integrity": "c296d77721361f17a8c25321859aa2cbb4d24ec4309df00d08b136bcd176cdd1"
+    },
+    "@ledger/ledger@0.1.2": {
+      "integrity": "4386060f1ad5a1de9e44c34a10d2961e3bd0998d074d3523c55e07e25eee8ca2"
+    },
+    "@std/datetime@0.225.3": {
+      "integrity": "fda0b7791b43d9a46764986fec39922a8ceb70ffca642651fa7d0683501a171a"
     },
     "@std/fmt@1.0.3": {
       "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
     },
     "@std/fmt@1.0.5": {
       "integrity": "0cfab43364bc36650d83c425cd6d99910fc20c4576631149f0f987eddede1a4d"
+    }
+  },
+  "npm": {
+    "printable-characters@1.0.42": {
+      "integrity": "sha512-dKp+C4iXWK4vVYZmYSd0KBH5F/h1HoZRsbJ82AVKRO3PEo8L4lBS/vLwhVtpwwuYcoIsVY+1JYKR268yn480uQ=="
+    },
+    "string.bullet@1.0.12": {
+      "integrity": "sha512-6+tQyad/ux52N+7wUcjmxeK5TfdeykBBLHQPk8MxUVrk9JwHzJnuxsJzjjpWAuz0x3EmnVGCg0ibMHqez1l/qQ==",
+      "dependencies": [
+        "printable-characters"
+      ]
+    },
+    "string.ify@1.0.64": {
+      "integrity": "sha512-4Aa5yndnuOhE1GV2W3ht4rQ08XHq46JLXmSOv0jeUWEzqliBvm8lAXvt+66np+J9DkoCZikFzTzjXVLRR0F/Xw==",
+      "dependencies": [
+        "printable-characters",
+        "string.bullet"
+      ]
     }
   }
 }
