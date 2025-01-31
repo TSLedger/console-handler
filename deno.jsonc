@@ -1,5 +1,5 @@
 {
-  "name": "@ledger/template-handler",
+  "name": "@ledger/console-handler",
   "version": "0.0.1",
   "exports": "./mod.ts",
   // Compiler Options
