@@ -1,4 +1,21 @@
-import type { BinderOption } from '../deps.ts';
+import type { BinderOption, Level } from '../deps.ts';
 
-export interface TemplateHandlerOptions extends BinderOption {
+export interface ConsoleHandlerOptions extends BinderOption {
+  /** If level is less than or equal to this specified level, the even will be logged. */
+  level?: Level;
+  /**
+   * The template for formatting messages.
+   *
+   * Available Variables:
+   * - {{timestamp}}
+   * - {{level}}
+   * - {{message}}
+   * - {{args}}
+   *
+   * Default:
+   * '[{{timestamp}}] {{level}}: {{message}} {{args}}'
+   */
+  template?: string;
+  /** If colors should be enabled. Overrides "NO_COLOR" environment variable. */
+  colors?: boolean;
 }
