@@ -1,5 +1,11 @@
 import { stringify } from '../deps.ts';
 
+/**
+ * Custom Object Serialization with Stringify.
+ *
+ * @param context
+ * @returns
+ */
 export function serialize(context: unknown): string {
   return stringify
     .default

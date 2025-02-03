@@ -17,6 +17,14 @@ export class Handler implements WorkerHandler {
 
   // deno-lint-ignore require-await
   public async receive({ context }: DispatchMessageContext): Promise<void> {
+    // Level
+    const level = Level[context.level];
+
+    // Filter Level
+    if (!(context.level <= (this.options.level ?? Level.TRACE))) {
+      return;
+    }
+
     // Timestamp
     const timestamp = `${color.white(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS'))}`;
 
@@ -31,9 +39,6 @@ export class Handler implements WorkerHandler {
     // Arguments
     let args = serialize(context.args);
     if (args.trim() === '[]') args = '';
-
-    // Level
-    const level = Level[context.level];
 
     // Variables
     const variables: [string, string][] = [
@@ -66,6 +71,12 @@ export class Handler implements WorkerHandler {
     }
   }
 
+  /**
+   * Substitute Template with Tupled Variables.
+   *
+   * @param tuple A '[string, string][]' variable.
+   * @returns The substituted string.
+   */
   private variable(...tuple: [string, string][]): string {
     let event = `${this.options.template}`;
     tuple.forEach(([k, v]) => {

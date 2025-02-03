@@ -10,7 +10,6 @@ An is an addon for the [Ledger](https://github.com/TSLedger/ledger) Project. Led
 
 ## Addon Features
 
-- TODO: Change
 - **Log Filtering**: Filter events based on the the severity.
 - **Log Format**: Utilize template string variables to customize the output to files.
 
@@ -20,7 +19,7 @@ An is an addon for the [Ledger](https://github.com/TSLedger/ledger) Project. Led
 import { Ledger } from 'jsr:@ledger/ledger';
 
 const ledger = new Ledger({
-  useAsyncDispatchQueue: true,
+  useAsyncDispatchQueue: true, //  or false for ImmediateDispatch mode.
 })
   .register({
     definition: 'jsr:@ledger/transport-name@0.0.1', // Version is Important
