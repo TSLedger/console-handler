@@ -4,7 +4,8 @@ import { delay } from "jsr:@std/async";
 import { expect } from "jsr:@std/expect";
 
 // Internal
-import { Ledger } from "../deps.ts";
+import { Ledger, Level } from "../deps.ts";
+import { ConsoleHandlerOptions } from "../lib/option.ts";
 
 Deno.test({
   name: "mod.ts",
@@ -17,11 +18,14 @@ Deno.test({
         ledger = new Ledger({
           useAsyncDispatchQueue: true,
         });
-        ledger.register({
-          definition: new URL("../mod.ts", import.meta.url).pathname,
+        ledger.register<ConsoleHandlerOptions>({
+          definition: new URL("../mod.ts", import.meta.url).href,
+          level: Level.SEVERE,
         });
         await ledger.alive();
+        ledger.trace("Debuggy!");
         ledger.information("Test, suite.");
+        ledger.severe("Uh oh!");
         await delay(250);
         ledger.terminate();
         await delay(250);
