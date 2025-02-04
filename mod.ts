@@ -3,6 +3,7 @@ import { type BinderOption, color, type DispatchMessageContext, format, Level, t
 import type { ConsoleHandlerOptions } from './lib/option.ts';
 import { serialize } from './lib/util.ts';
 
+/** Handler Exported Class. */
 export class Handler implements WorkerHandler {
   private readonly options: ConsoleHandlerOptions;
 
@@ -74,12 +75,12 @@ export class Handler implements WorkerHandler {
   /**
    * Substitute Template with Tupled Variables.
    *
-   * @param tuple A '[string, string][]' variable.
+   * @param tuples A '[string, string][]' variable.
    * @returns The substituted string.
    */
-  private variable(...tuple: [string, string][]): string {
+  private variable(...tuples: [string, string][]): string {
     let event = `${this.options.template}`;
-    tuple.forEach(([k, v]) => {
+    tuples.forEach(([k, v]) => {
       event = event.replaceAll(`{{${k}}}`, v);
     });
     return event;

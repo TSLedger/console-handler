@@ -1,6 +1,8 @@
-# handler-template
+# console-handler
 
 An is an addon for the [Ledger](https://github.com/TSLedger/ledger) Project. Ledger is a customizable interface for logging written in TypeScript. This add is designed to work with only Ledger's TypeScript-based, batteries-included API. We focus on giving you a powerful and extensible solution for your projects.
+
+Please refer to [Ledger](https://github.com/TSLedger/ledger) Documentation for usage.
 
 ## Ledger Features
 
@@ -12,22 +14,6 @@ An is an addon for the [Ledger](https://github.com/TSLedger/ledger) Project. Led
 
 - **Log Filtering**: Filter events based on the the severity.
 - **Log Format**: Utilize template string variables to customize the output to files.
-
-### Basic Usage
-
-```ts
-import { Ledger } from 'jsr:@ledger/ledger';
-
-const ledger = new Ledger({
-  useAsyncDispatchQueue: true, //  or false for ImmediateDispatch mode.
-})
-  .register({
-    definition: 'jsr:@ledger/transport-name@0.0.1', // Version is Important
-  });
-
-// ledger.trace, ledger.information, ledger.warning, ledger.severe
-ledger.information('Hello, world');
-```
 
 ## License
 
