@@ -6,6 +6,9 @@
     "jsr:@ledger/ledger@0.1.1": "0.1.1",
     "jsr:@ledger/ledger@0.1.2": "0.1.2",
     "jsr:@ledger/ledger@0.1.3": "0.1.3",
+    "jsr:@ledger/ledger@0.1.4": "0.1.4",
+    "jsr:@ledger/ledger@0.1.5": "0.1.5",
+    "jsr:@ledger/ledger@0.1.6": "0.1.6",
     "jsr:@std/assert@^1.0.11": "1.0.11",
     "jsr:@std/async@*": "1.0.10",
     "jsr:@std/datetime@0.225.3": "0.225.3",
@@ -34,6 +37,27 @@
     },
     "@ledger/ledger@0.1.3": {
       "integrity": "09147cf8e1aef98ce0be012b23eb90b94626a109a3dc52bed223ae975c575ce4",
+      "dependencies": [
+        "jsr:@cm-iv/queue",
+        "jsr:@jotsr/delayed"
+      ]
+    },
+    "@ledger/ledger@0.1.4": {
+      "integrity": "83e1de22914f375f2e2a89c2db6ce5f2b91f8821c7923328fbb8879c1bf9b2f0",
+      "dependencies": [
+        "jsr:@cm-iv/queue",
+        "jsr:@jotsr/delayed"
+      ]
+    },
+    "@ledger/ledger@0.1.5": {
+      "integrity": "603c6a1fa301e6dc5e78b231ee89dd83b966b709ca6c14116e028511a46fdd80",
+      "dependencies": [
+        "jsr:@cm-iv/queue",
+        "jsr:@jotsr/delayed"
+      ]
+    },
+    "@ledger/ledger@0.1.6": {
+      "integrity": "ed4617a20314c63883d5d141f7e11262eba433e8668044e3e4d21b36d7f604b6",
       "dependencies": [
         "jsr:@cm-iv/queue",
         "jsr:@jotsr/delayed"

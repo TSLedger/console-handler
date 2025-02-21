@@ -1,4 +1,4 @@
-name: 'Deno JSR Deployment'
+name: "Deno JSR Deployment"
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: denoland/setup-deno@v1
+      - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
-      - name: 'Publish Package'
+      - name: "Publish Package"
         run: deno publish

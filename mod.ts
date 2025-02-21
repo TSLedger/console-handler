@@ -1,26 +1,19 @@
 // deno-lint-ignore-file no-console
-import {
-  type BinderOption,
-  color,
-  type DispatchMessageContext,
-  format,
-  Level,
-  type WorkerHandler,
-} from "./deps.ts";
-import type { ConsoleHandlerOptions } from "./lib/option.ts";
-import { serialize } from "./lib/util.ts";
+import { color, type DispatchMessageContext, format, Level, type ServiceBinderOption, type WorkerHandler } from './deps.ts';
+import type { ConsoleHandlerOptions } from './lib/option.ts';
+import { serialize } from './lib/util.ts';
 
 /** Handler Exported Class. */
 export class Handler implements WorkerHandler {
-  private readonly options: ConsoleHandlerOptions;
+  private readonly options: ConsoleHandlerOptions & ServiceBinderOption;
 
-  public constructor(options: BinderOption) {
-    this.options = options as ConsoleHandlerOptions;
+  public constructor(options: ServiceBinderOption) {
+    this.options = options;
 
     // Set Default Options
     this.options.colors = this.options.colors ?? color.getColorEnabled();
     this.options.template = this.options.template ??
-      "[{{timestamp}}] {{level}}: {{message}} {{args}}";
+      '[{{timestamp}}] ({{service}}) {{level}}: {{message}} {{args}}';
     color.setColorEnabled(this.options.colors);
   }
 
@@ -34,13 +27,8 @@ export class Handler implements WorkerHandler {
       return;
     }
 
-    // Timestamp
-    const timestamp = `${
-      color.white(format(context.date, "yyyy-MM-dd HH:mm:ss.SSS"))
-    }`;
-
     // Message
-    let message = context.q ?? "";
+    let message = context.q ?? '';
     if (message instanceof Error) {
       message = color.red(message.stack ?? message.message);
     } else {
@@ -49,33 +37,34 @@ export class Handler implements WorkerHandler {
 
     // Arguments
     let args = serialize(context.args);
-    if (args.trim() === "[]") args = "";
+    if (args.trim() === '[]') args = '';
 
     // Variables
     const variables: [string, string][] = [
-      ["timestamp", timestamp],
-      ["message", message],
-      ["args", args],
+      ['service', color.gray(this.options.service)],
+      ['timestamp', color.white(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS'))],
+      ['message', message],
+      ['args', args],
     ];
 
     // Write to Output
     switch (context.level) {
       case Level.TRACE: {
         console.info(
-          this.variable(...variables, ["level", `${color.brightCyan(level)}`]),
+          this.variable(...variables, ['level', `${color.brightCyan(level)}`]),
         );
         break;
       }
       case Level.INFORMATION: {
         console.info(
-          this.variable(...variables, ["level", `${color.brightBlue(level)}`]),
+          this.variable(...variables, ['level', `${color.brightBlue(level)}`]),
         );
         break;
       }
       case Level.WARNING: {
         console.info(
           this.variable(...variables, [
-            "level",
+            'level',
             `${color.brightYellow(level)}`,
           ]),
         );
@@ -83,13 +72,13 @@ export class Handler implements WorkerHandler {
       }
       case Level.SEVERE: {
         console.info(
-          this.variable(...variables, ["level", `${color.brightRed(level)}`]),
+          this.variable(...variables, ['level', `${color.brightRed(level)}`]),
         );
         break;
       }
       default: {
         console.info(
-          this.variable(...variables, ["level", `${color.brightGreen(level)}`]),
+          this.variable(...variables, ['level', `${color.brightGreen(level)}`]),
         );
       }
     }
