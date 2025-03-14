@@ -1,100 +1,66 @@
-// deno-lint-ignore-file no-console
-import { color, type DispatchMessageContext, format, Level, type ServiceBinderOption, type WorkerHandler } from './deps.ts';
-import type { ConsoleHandlerOptions } from './lib/option.ts';
-import { serialize } from './lib/util.ts';
+import { prompts } from './deps.ts';
+import { tcg } from './lib/api/tcg.ts';
+import { getSetList } from './lib/api/tcg/getSetList.ts';
+import { tcgdex } from './lib/api/tcgdex.ts';
+import { request } from './lib/graphql.ts';
+import type { Choice } from './lib/interface/prompt.ts';
+import type { Sets } from './lib/interface/response.ts';
 
-/** Handler Exported Class. */
-export class Handler implements WorkerHandler {
-  private readonly options: ConsoleHandlerOptions & ServiceBinderOption;
+// Select the API
+const apiprompt = await prompts({
+  type: 'select',
+  name: 'api',
+  message: 'Select the API to Search',
+  choices: [
+    { title: 'PokemonTCG (Physical)', value: 'tcg' },
+    { title: 'TCGDex (Pocket)', value: 'tcgdex' },
+  ],
+}) as {
+  api: string;
+};
+if (apiprompt.api === null || apiprompt.api.length === 0) {
+  throw new Deno.errors.InvalidData('The api to sequence with must be specified.');
+}
 
-  public constructor(options: ServiceBinderOption) {
-    this.options = options;
-
-    // Set Default Options
-    this.options.colors = this.options.colors ?? color.getColorEnabled();
-    this.options.template = this.options.template ??
-      '[{{timestamp}}] ({{service}}) {{level}}: {{message}} {{args}}';
-    color.setColorEnabled(this.options.colors);
+// Dynamically Generate Sets
+const sets: Choice[] = [];
+switch (apiprompt.api) {
+  case 'tcg': {
+    (await getSetList()).reverse().forEach((v) => sets.push(v));
+    break;
   }
-
-  // deno-lint-ignore require-await
-  public async receive({ context }: DispatchMessageContext): Promise<void> {
-    // Level
-    const level = Level[context.level];
-
-    // Filter Level
-    if (!(context.level <= (this.options.level ?? Level.LEDGER_ERROR))) {
-      return;
-    }
-
-    // Message
-    let message = context.q ?? '';
-    if (message instanceof Error) {
-      message = color.red(message.stack ?? message.message);
-    } else {
-      message = color.white(message);
-    }
-
-    // Arguments
-    let args = serialize(context.args);
-    if (args.trim() === '[]') args = '';
-
-    // Variables
-    const variables: [string, string][] = [
-      ['service', color.gray(this.options.service)],
-      ['timestamp', color.white(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS'))],
-      ['message', message],
-      ['args', args],
-    ];
-
-    // Write to Output
-    switch (context.level) {
-      case Level.TRACE: {
-        console.info(
-          this.variable(...variables, ['level', `${color.brightCyan(level)}`]),
-        );
-        break;
-      }
-      case Level.INFORMATION: {
-        console.info(
-          this.variable(...variables, ['level', `${color.brightBlue(level)}`]),
-        );
-        break;
-      }
-      case Level.WARNING: {
-        console.info(
-          this.variable(...variables, [
-            'level',
-            `${color.brightYellow(level)}`,
-          ]),
-        );
-        break;
-      }
-      case Level.SEVERE: {
-        console.info(
-          this.variable(...variables, ['level', `${color.brightRed(level)}`]),
-        );
-        break;
-      }
-      default: {
-        console.info(
-          this.variable(...variables, ['level', `${color.brightGreen(level)}`]),
-        );
-      }
-    }
-  }
-
-  /**
-   * Substitute Template with Tupled Variables.
-   *
-   * @param tuples A '[string, string][]' variable.
-   * @returns The substituted string.
-   */
-  private variable(...tuples: [string, string][]): string {
-    let event = `${this.options.template}`;
-    tuples.forEach(([k, v]) => {
-      event = event.replaceAll(`{{${k}}}`, v);
+  case 'tcgdex': {
+    const qsets = await request<Sets>('get-sets');
+    qsets.sets.reverse().filter((v) => {
+      return ['P-A', 'A1', 'A1a', 'A2', 'A2a'].includes(v.id);
+    }).forEach((v) => {
+      sets.push({ title: `${v.name} (${v.id})`, value: v.id });
     });
-    return event;
+    break;
+  }
+}
+
+// Get the Sets to Sequence
+const prompt = await prompts({
+  type: 'multiselect',
+  name: 'set',
+  message: 'Choose the TCG Sets to Sequence',
+  choices: sets,
+  initial: 0,
+}) as {
+  set: string[];
+};
+if (prompt.set === null || prompt.set.length === 0) {
+  throw new Deno.errors.InvalidData('The set to sequence must be specified.');
+}
+
+switch (apiprompt.api) {
+  case 'tcg': {
+    tcg(prompt.set);
+    break;
+  }
+  case 'tcgdex': {
+    tcgdex(prompt.set);
+    break;
   }
 }
