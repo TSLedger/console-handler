@@ -9,6 +9,8 @@
     "jsr:@ledger/ledger@0.1.4": "0.1.4",
     "jsr:@ledger/ledger@0.1.5": "0.1.5",
     "jsr:@ledger/ledger@0.1.6": "0.1.6",
+    "jsr:@ledger/ledger@0.1.7": "0.1.7",
+    "jsr:@ledger/ledger@0.1.8": "0.1.8",
     "jsr:@std/assert@^1.0.11": "1.0.11",
     "jsr:@std/async@*": "1.0.10",
     "jsr:@std/datetime@0.225.3": "0.225.3",
@@ -58,6 +60,16 @@
     },
     "@ledger/ledger@0.1.6": {
       "integrity": "ed4617a20314c63883d5d141f7e11262eba433e8668044e3e4d21b36d7f604b6",
+      "dependencies": [
+        "jsr:@cm-iv/queue",
+        "jsr:@jotsr/delayed"
+      ]
+    },
+    "@ledger/ledger@0.1.7": {
+      "integrity": "8de55f6a441cb2f828a4df4d2d1b0c0bd1c81302d0ee8ee6b5bad2b6971d89a0"
+    },
+    "@ledger/ledger@0.1.8": {
+      "integrity": "dfcc077a11553c3319e3e53e12deeea593306e64410f2b04d566340b862c0ea8",
       "dependencies": [
         "jsr:@cm-iv/queue",
         "jsr:@jotsr/delayed"

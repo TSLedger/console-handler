@@ -1,19 +1,18 @@
 // deno-lint-ignore-file no-console
-import { color, type DispatchMessageContext, format, Level, type ServiceBinderOption, type WorkerHandler } from './deps.ts';
+import { color, type DispatchMessageContext, format, Level, type ServiceHandlerOption, type WorkerHandler } from './deps.ts';
 import type { ConsoleHandlerOptions } from './lib/option.ts';
 import { serialize } from './lib/util.ts';
 
 /** Handler Exported Class. */
 export class Handler implements WorkerHandler {
-  private readonly options: ConsoleHandlerOptions & ServiceBinderOption;
+  private readonly options: ConsoleHandlerOptions & ServiceHandlerOption;
 
-  public constructor(options: ServiceBinderOption) {
+  public constructor(options: ServiceHandlerOption) {
     this.options = options;
 
     // Set Default Options
     this.options.colors = this.options.colors ?? color.getColorEnabled();
-    this.options.template = this.options.template ??
-      '[{{timestamp}}] ({{service}}) {{level}}: {{message}} {{args}}';
+    this.options.template = this.options.template ?? '[{{timestamp}}] ({{service}}) {{level}}: {{message}} {{args}}';
     color.setColorEnabled(this.options.colors);
   }
 
