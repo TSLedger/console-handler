@@ -10,6 +10,10 @@
     "async": "jsr:@std/async@1.0.15",
     "expect": "jsr:@std/expect@1.0.17"
   },
+  "tasks": {
+    "setup": "./dev/setup.sh",
+    "test": "deno check && deno lint && deno fmt --check --ignore=.github && deno test -A"
+  },
   // Compiler Options
   "compilerOptions": {
     "lib": [
