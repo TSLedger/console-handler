@@ -1,5 +1,8 @@
 // deno-lint-ignore-file no-console
-import { color, type DispatchMessageContext, format, Level, type ServiceHandlerOption, type WorkerHandler } from './deps.ts';
+// import { color, type DispatchMessageContext, format, Level, type ServiceHandlerOption, type WorkerHandler } from './deps.ts';
+import { format } from '@std/datetime/format';
+import * as color from '@std/fmt/colors';
+import { type DispatchMessageContext, Level, type ServiceHandlerOption, type WorkerHandler } from 'ledger/struct';
 import type { ConsoleHandlerOptions } from './lib/option.ts';
 import { serialize } from './lib/util.ts';
 
@@ -8,7 +11,7 @@ export class Handler implements WorkerHandler {
   private readonly options: ConsoleHandlerOptions & ServiceHandlerOption;
 
   public constructor(options: ServiceHandlerOption) {
-    this.options = options;
+    this.options = options as ConsoleHandlerOptions & ServiceHandlerOption;
 
     // Set Default Options
     this.options.colors = this.options.colors ?? color.getColorEnabled();
@@ -31,7 +34,7 @@ export class Handler implements WorkerHandler {
     if (message instanceof Error) {
       message = color.red(message.stack ?? message.message);
     } else {
-      message = color.white(message);
+      message = color.white(serialize(message));
     }
 
     // Arguments
@@ -61,7 +64,7 @@ export class Handler implements WorkerHandler {
         break;
       }
       case Level.WARNING: {
-        console.info(
+        console.warn(
           this.variable(...variables, [
             'level',
             `${color.brightYellow(level)}`,
@@ -70,7 +73,7 @@ export class Handler implements WorkerHandler {
         break;
       }
       case Level.SEVERE: {
-        console.info(
+        console.error(
           this.variable(...variables, ['level', `${color.brightRed(level)}`]),
         );
         break;

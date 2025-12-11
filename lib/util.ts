@@ -1,4 +1,4 @@
-import { stringify } from '../deps.ts';
+import * as stringify from 'string.ify';
 
 /**
  * Custom Object Serialization with Stringify.

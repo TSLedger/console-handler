@@ -5,6 +5,14 @@ on:
     tags:
       - 'v*.*.*'
 
+permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
+  discussions: write
+  id-token: write
+
 jobs:
   candidate:
     runs-on: ubuntu-latest
@@ -16,7 +24,7 @@ jobs:
           deno-version: v2.x
       - uses: devcontainers/ci@v0.3
         with:
-          runCmd: make validate
+          runCmd: deno task test
       # Publish
       - uses: softprops/action-gh-release@v2
         with:

@@ -1,11 +1,11 @@
-// deno-lint-ignore-file no-external-import
 // Suite
-import { delay } from 'jsr:@std/async';
-import { expect } from 'jsr:@std/expect';
+import { delay } from 'async';
+import { expect } from 'expect';
 
 // Internal
-import { Ledger, Level } from '../deps.ts';
-import { ConsoleHandlerOptions } from '../lib/option.ts';
+import { Ledger } from 'ledger';
+import { Level } from 'ledger/struct';
+import type { ConsoleHandlerOptions } from '../lib/option.ts';
 
 Deno.test({
   name: 'mod.ts',

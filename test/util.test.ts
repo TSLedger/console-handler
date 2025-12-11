@@ -1,6 +1,5 @@
-// deno-lint-ignore-file no-external-import
 // Suite
-import { expect } from 'jsr:@std/expect';
+import { expect } from 'expect';
 
 // Internal
 import { serialize } from '../lib/util.ts';
