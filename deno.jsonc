@@ -1,6 +1,6 @@
 {
   "name": "@ledger/console-handler",
-  "version": "0.0.5",
+  "version": "0.2.0",
   "exports": "./mod.ts",
   "imports": {
     "ledger": "jsr:@ledger/ledger@0.2.0",
