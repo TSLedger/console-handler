@@ -2,7 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@cm-iv/queue@1.0.0": "1.0.0",
-    "jsr:@ledger/ledger@0.2.0": "0.2.0",
+    "jsr:@ledger/ledger@0.3.7": "0.3.7",
     "jsr:@std/assert@^1.0.14": "1.0.16",
     "jsr:@std/async@1.0.15": "1.0.15",
     "jsr:@std/datetime@0.225.5": "0.225.5",
@@ -10,14 +10,14 @@
     "jsr:@std/fmt@1.0.8": "1.0.8",
     "jsr:@std/internal@^1.0.10": "1.0.12",
     "jsr:@std/internal@^1.0.12": "1.0.12",
-    "npm:string.ify@1.0.64": "1.0.64"
+    "npm:next-json@0.5.1": "0.5.1"
   },
   "jsr": {
     "@cm-iv/queue@1.0.0": {
       "integrity": "0dc1da37987077e765240a73f7164196fca065ce585fcb542f8db50831078f0a"
     },
-    "@ledger/ledger@0.2.0": {
-      "integrity": "adc9e22aef427c49d5670e4e2b8d781d1ebc34f115739653d1d10ca0ee3a16e7",
+    "@ledger/ledger@0.3.7": {
+      "integrity": "2239dba9f7cef01dbb1ffc32ad98ad47fac1d4aa8051b25a04055b87488ebce7",
       "dependencies": [
         "jsr:@cm-iv/queue"
       ]
@@ -49,31 +49,18 @@
     }
   },
   "npm": {
-    "printable-characters@1.0.42": {
-      "integrity": "sha512-dKp+C4iXWK4vVYZmYSd0KBH5F/h1HoZRsbJ82AVKRO3PEo8L4lBS/vLwhVtpwwuYcoIsVY+1JYKR268yn480uQ=="
-    },
-    "string.bullet@1.0.12": {
-      "integrity": "sha512-6+tQyad/ux52N+7wUcjmxeK5TfdeykBBLHQPk8MxUVrk9JwHzJnuxsJzjjpWAuz0x3EmnVGCg0ibMHqez1l/qQ==",
-      "dependencies": [
-        "printable-characters"
-      ]
-    },
-    "string.ify@1.0.64": {
-      "integrity": "sha512-4Aa5yndnuOhE1GV2W3ht4rQ08XHq46JLXmSOv0jeUWEzqliBvm8lAXvt+66np+J9DkoCZikFzTzjXVLRR0F/Xw==",
-      "dependencies": [
-        "printable-characters",
-        "string.bullet"
-      ]
+    "next-json@0.5.1": {
+      "integrity": "sha512-HOVDDYP+gN7gtbRUrtj6C/cy12M1VG59deVRaO/Iyuw6oD5F9Y/M0jHxjV813HizOjJurV2uCPZaMVmzMszJHA=="
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@ledger/ledger@0.2.0",
+      "jsr:@ledger/ledger@0.3.7",
       "jsr:@std/async@1.0.15",
       "jsr:@std/datetime@0.225.5",
       "jsr:@std/expect@1.0.17",
       "jsr:@std/fmt@1.0.8",
-      "npm:string.ify@1.0.64"
+      "npm:next-json@0.5.1"
     ]
   }
 }

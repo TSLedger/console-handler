@@ -1,8 +1,4 @@
-import type { HandlerOption, Level } from 'ledger/struct';
-
-export interface ConsoleHandlerOptions extends HandlerOption {
-  /** If level is less than or equal to this specified level, the even will be logged. */
-  level?: Level;
+export interface ConsoleHandlerOptions {
   /**
    * The template for formatting messages.
    *

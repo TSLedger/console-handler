@@ -1,10 +1,9 @@
 // deno-lint-ignore-file no-console
-// import { color, type DispatchMessageContext, format, Level, type ServiceHandlerOption, type WorkerHandler } from './deps.ts';
 import { format } from '@std/datetime/format';
 import * as color from '@std/fmt/colors';
 import { type DispatchMessageContext, Level, type ServiceHandlerOption, type WorkerHandler } from 'ledger/struct';
+import { NJSON } from 'next-json';
 import type { ConsoleHandlerOptions } from './lib/option.ts';
-import { serialize } from './lib/util.ts';
 
 /** Handler Exported Class. */
 export class Handler implements WorkerHandler {
@@ -16,7 +15,7 @@ export class Handler implements WorkerHandler {
     // Set Default Options
     this.options.colors = this.options.colors ?? color.getColorEnabled();
     this.options.template = this.options.template ?? '[{{timestamp}}] ({{service}}) {{level}}: {{message}} {{args}}';
-    color.setColorEnabled(this.options.colors);
+    color.setColorEnabled(this.options.colors ?? color.getColorEnabled);
   }
 
   // deno-lint-ignore require-await
@@ -24,35 +23,18 @@ export class Handler implements WorkerHandler {
     // Level
     const level = Level[context.level];
 
-    // Filter Level
-    if (!(context.level <= (this.options.level ?? Level.LEDGER_ERROR))) {
-      return;
-    }
-
-    // Message
-    let message = context.q ?? '';
-    if (message instanceof Error) {
-      message = color.red(message.stack ?? message.message);
-    } else {
-      message = color.white(serialize(message));
-    }
-
-    // Arguments
-    let args = serialize(context.args);
-    if (args.trim() === '[]') args = '';
-
     // Variables
     const variables: [string, string][] = [
-      ['service', color.gray(this.options.service)],
-      ['timestamp', color.white(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS'))],
-      ['message', message],
-      ['args', args],
+      ['service', color.gray(NJSON.stringify(this.options.service))],
+      ['timestamp', color.white(NJSON.stringify(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS')))],
+      ['message', NJSON.stringify(context.q)],
+      ['args', NJSON.stringify([...(context.args ?? [])], null, 2)],
     ];
 
     // Write to Output
     switch (context.level) {
       case Level.TRACE: {
-        console.info(
+        console.debug(
           this.variable(...variables, ['level', `${color.brightCyan(level)}`]),
         );
         break;
@@ -77,11 +59,6 @@ export class Handler implements WorkerHandler {
           this.variable(...variables, ['level', `${color.brightRed(level)}`]),
         );
         break;
-      }
-      default: {
-        console.info(
-          this.variable(...variables, ['level', `${color.brightGreen(level)}`]),
-        );
       }
     }
   }
