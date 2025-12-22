@@ -23,11 +23,16 @@ export class Handler implements WorkerHandler {
     // Level
     const level = Level[context.level];
 
+    // Detect context.q type for stringification.
+    if (context.q instanceof Error || typeof context.q !== 'string') {
+      context.q = NJSON.stringify(context.q);
+    }
+
     // Variables
     const variables: [string, string][] = [
-      ['service', color.gray(NJSON.stringify(this.options.service))],
-      ['timestamp', color.white(NJSON.stringify(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS')))],
-      ['message', NJSON.stringify(context.q)],
+      ['service', color.gray(this.options.service)],
+      ['timestamp', color.white(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS'))],
+      ['message', context.q],
       ['args', NJSON.stringify([...(context.args ?? [])], null, 2)],
     ];
 
