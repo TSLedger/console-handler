@@ -39,18 +39,21 @@ export class Handler implements WorkerHandler {
     // Write to Output
     switch (context.level) {
       case Level.TRACE: {
+        console.trace('CalledTrace');
         console.debug(
           this.variable(...variables, ['level', `${color.brightCyan(level)}`]),
         );
         break;
       }
       case Level.INFORMATION: {
+        console.info('CalledInformation');
         console.info(
           this.variable(...variables, ['level', `${color.brightBlue(level)}`]),
         );
         break;
       }
       case Level.WARNING: {
+        console.warn('CalledWarning');
         console.warn(
           this.variable(...variables, [
             'level',
@@ -60,6 +63,7 @@ export class Handler implements WorkerHandler {
         break;
       }
       case Level.SEVERE: {
+        console.error('CalledSevere');
         console.error(
           this.variable(...variables, ['level', `${color.brightRed(level)}`]),
         );
