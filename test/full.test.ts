@@ -19,12 +19,12 @@ Deno.test('Ledger - Console Handler Runtime Report', async (kit) => {
     spStdout = decoder.decode(stdout);
     spStderr = decoder.decode(stderr);
   });
-  await kit.step('Verify Process Output Expectations', async () => {
+  await kit.step('Verify Process Output Expectations', () => {
     assertEquals(spCode, 0);
     assertGreaterOrEqual(spStdout.length, 0);
     assertGreaterOrEqual(spStderr.length, 0);
   });
-  await kit.step('Verify Process (stdout) Content', async () => {
+  await kit.step('Verify Process (stdout) Content', () => {
     // Base
     assertStringIncludes(spStdout, 'Test IPC Service');
     assertStringIncludes(spStdout, 'Validating API');
@@ -48,7 +48,7 @@ Deno.test('Ledger - Console Handler Runtime Report', async (kit) => {
     assertStringIncludes(spStdout, '"d": "deep"');
     assertStringIncludes(spStdout, '"date": new Date(1735689600000)');
   });
-  await kit.step('Verify Process (stderr) Content', async () => {
+  await kit.step('Verify Process (stderr) Content', () => {
     // Base
     assertStringIncludes(spStderr, 'Test IPC Service');
     assertStringIncludes(spStderr, 'Validating API');
