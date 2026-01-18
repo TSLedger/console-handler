@@ -34,6 +34,7 @@ ledger.trace('Validating API... (Trace)', object);
 ledger.information('Validating API... (Information)', object);
 ledger.warning('Validating API... (Warning)', object);
 ledger.severe('Validating API... (Severe)', object);
+ledger.severe(new Error('Severe Level Error'));
 await new Promise((resolve) => setTimeout(resolve, 1000));
 
 ledger.terminate();
