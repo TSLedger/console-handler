@@ -82,3 +82,5 @@ export class Handler implements WorkerHandler {
     return event;
   }
 }
+
+export type { ConsoleHandlerOptions };
