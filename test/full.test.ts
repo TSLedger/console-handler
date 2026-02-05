@@ -35,8 +35,7 @@ Deno.test('Ledger - Console Handler Runtime Report', async (kit) => {
     assertStringIncludes(spStdout, 'Information');
     // Properties
     assertStringIncludes(spStdout, 'some test');
-    assertStringIncludes(spStdout, 'Object.assign(');
-    assertStringIncludes(spStdout, 'new Error("Test Error"),');
+    assertStringIncludes(spStdout, 'Error: Test Error');
     assertStringIncludes(spStdout, 'array');
     assertStringIncludes(spStdout, 'set');
     assertStringIncludes(spStdout, 'map');
@@ -45,8 +44,8 @@ Deno.test('Ledger - Console Handler Runtime Report', async (kit) => {
     assertStringIncludes(spStdout, 'k2');
     assertStringIncludes(spStdout, 'v2');
     assertStringIncludes(spStdout, 'nested');
-    assertStringIncludes(spStdout, '"d": "deep"');
-    assertStringIncludes(spStdout, '"date": new Date(1735689600000)');
+    assertStringIncludes(spStdout, 'd: "deep"');
+    assertStringIncludes(spStdout, 'date: 2025-01-01T00:00:00.000Z');
   });
   await kit.step('Verify Process (stderr) Content', () => {
     // Base
@@ -59,8 +58,7 @@ Deno.test('Ledger - Console Handler Runtime Report', async (kit) => {
     assertStringIncludes(spStderr, 'Severe');
     // Properties
     assertStringIncludes(spStderr, 'some test');
-    assertStringIncludes(spStderr, 'Object.assign(');
-    assertStringIncludes(spStderr, 'new Error("Test Error"),');
+    assertStringIncludes(spStderr, 'Error: Test Error');
     assertStringIncludes(spStderr, 'array');
     assertStringIncludes(spStderr, 'set');
     assertStringIncludes(spStderr, 'map');
@@ -69,7 +67,7 @@ Deno.test('Ledger - Console Handler Runtime Report', async (kit) => {
     assertStringIncludes(spStderr, 'k2');
     assertStringIncludes(spStderr, 'v2');
     assertStringIncludes(spStderr, 'nested');
-    assertStringIncludes(spStderr, '"d": "deep"');
-    assertStringIncludes(spStderr, '"date": new Date(1735689600000)');
+    assertStringIncludes(spStderr, 'd: "deep"');
+    assertStringIncludes(spStderr, 'date: 2025-01-01T00:00:00.000Z');
   });
 });

@@ -2,7 +2,6 @@
 import { format } from '@std/datetime/format';
 import * as color from '@std/fmt/colors';
 import { type DispatchMessageContext, Level, type ServiceHandlerOption, type WorkerHandler } from 'ledger/struct';
-import { NJSON } from 'next-json';
 import type { ConsoleHandlerOptions } from './lib/option.ts';
 
 /** Handler Exported Class. */
@@ -25,7 +24,7 @@ export class Handler implements WorkerHandler {
 
     // Detect context.q type for stringification.
     if (context.q instanceof Error || typeof context.q !== 'string') {
-      context.q = NJSON.stringify(context.q, null, 2);
+      context.q = Deno.inspect(context.q, { depth: 10, colors: this.options.colors ?? false, compact: false, trailingComma: true, breakLength: 50 });
     }
 
     // Variables
@@ -33,7 +32,7 @@ export class Handler implements WorkerHandler {
       ['service', color.gray(this.options.service)],
       ['timestamp', color.white(format(context.date, 'yyyy-MM-dd HH:mm:ss.SSS'))],
       ['message', context.q],
-      ['args', NJSON.stringify([...(context.args ?? [])], null, 2)],
+      ['args', Deno.inspect([...(context.args ?? [])], { depth: 10, colors: this.options.colors ?? false, compact: false, trailingComma: true, breakLength: 50 })],
     ];
 
     // Write to Output
